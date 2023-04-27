@@ -1,4 +1,5 @@
 ﻿using ETicaretAPI.Application.Abstractions;
+using ETicaretAPI.Persistance.Concretes;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace ETicaretAPI.Persistance
     {
         public static void AddPersistanceServices(this IServiceCollection services)
         {
-            services.AddSingleton<IProductService, IProductService>();
+            services.AddSingleton<IProductService, ProductService>();
         }
     }
 }
