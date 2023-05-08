@@ -14,7 +14,7 @@ namespace ETicaretAPI.Infrastructure.Services
     {
         async Task<string> FileRenameASync(string path, string fileName, bool first = true)
         {
-            return await Task.Run<string>(() =>
+          return await Task.Run<string>(() =>
 
             {
 
@@ -58,8 +58,9 @@ namespace ETicaretAPI.Infrastructure.Services
 
                 return newFileName;
 
-            });
+
+
+           });
         }
-  
     }
 }
