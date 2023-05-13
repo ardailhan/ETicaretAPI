@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ETicaretAPI.Application.Abstractions.Token
+namespace ETicaretAPI.Application.Features.Commands.AppUser.FacebookLogin
 {
-    public interface ITokenHandler
+    public class FacebookLoginCommandResponse
     {
-        DTOs.Token CreateAccessToken(int second);
+        public Token Token { get; set; }
     }
 }
