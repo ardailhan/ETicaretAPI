@@ -54,8 +54,10 @@ namespace ETicaretAPI.Persistance.Services
                 if (_basket.Any(b => b.Order is null))
                     targetBasket = _basket.FirstOrDefault(b => b.Order is null)?.Basket;
                 else
+                {
                     targetBasket = new();
-                user.Baskets.Add(new());
+                    user.Baskets.Add(targetBasket);
+                }
 
                 await _basketWriteRepository.SaveAsync();
                 return targetBasket;
