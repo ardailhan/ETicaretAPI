@@ -1,6 +1,8 @@
 ﻿using ETicaretAPI.Application.Abstractions.Services;
 using ETicaretAPI.Application.DTOs.Order;
 using ETicaretAPI.Application.Repositories;
+using ETicaretAPI.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ETicaretAPI.Persistance.Services
@@ -9,12 +11,14 @@ namespace ETicaretAPI.Persistance.Services
     {
         readonly IOrderWriteRepository _orderWriteRepository;
         readonly IOrderReadRepository _orderReadRepository;
-
-        public OrderService(IOrderWriteRepository orderWriteRepository, IOrderReadRepository orderReadRepository)
+        readonly ICompletedOrderWriteRepository _completedOrderWriteRepository;
+        public OrderService(IOrderWriteRepository orderWriteRepository, IOrderReadRepository orderReadRepository, ICompletedOrderWriteRepository completedOrderWriteRepository)
         {
             _orderWriteRepository = orderWriteRepository;
             _orderReadRepository = orderReadRepository;
+            _completedOrderWriteRepository = completedOrderWriteRepository;
         }
+
 
         public async Task CreateOrderAsync(CreateOrder createOrder)
         {
@@ -77,6 +81,14 @@ namespace ETicaretAPI.Persistance.Services
                 Description = data.Description,
                 OrderCode = data.OrderCode
             };
+        }
+        public async Task CompleteOrderAsync(string id)
+        {
+            Order order= await _orderReadRepository.GetByIdAsync(id);
+            if (order != null)
+            {
+                await _completedOrderWriteRepository.AddAsync(new() {OrderId = Guid.Parse(id) });
+            }
         }
     }
 }
