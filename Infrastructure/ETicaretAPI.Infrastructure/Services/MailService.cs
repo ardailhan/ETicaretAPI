@@ -15,6 +15,7 @@ namespace ETicaretAPI.Infrastructure.Services
             _configuration = configuration;
         }
 
+
         public async Task SendMailAsync(string to, string subject, string body, bool isBodyHtml = true)
         {
             await SendMailAsync(new[] { to }, subject, body, isBodyHtml);
@@ -51,6 +52,13 @@ namespace ETicaretAPI.Infrastructure.Services
 
             await SendMailAsync(to, "Password Renewal Request", mail.ToString());
 
+        }
+        public async Task SendCompletedOrderMailAsync(string to, string orderCode, DateTime orderDate, string userName)
+        {
+            string mail = $"Dear Customer {userName} Hello<br>" +
+                $"{orderCode} your order with that Code on this date {orderDate} has been completed and sent. ";
+
+            await SendMailAsync(to, $"{orderCode} order with the code completed", mail);
         }
     }
 }
