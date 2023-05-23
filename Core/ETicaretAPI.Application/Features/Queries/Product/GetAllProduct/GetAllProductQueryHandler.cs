@@ -24,7 +24,7 @@ namespace ETicaretAPI.Application.Features.Queries.Product.GetAllProduct
 
         public async Task<GetAllProductQueryResponse> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("All Products Are Listed");
+            _logger.LogInformation("Get All Products");
 
             var totalProductCount = _productReadRepository.GetAll(false).Count();
             var products = _productReadRepository.GetAll(false).Skip(request.Page * request.Size).Take(request.Size).Include(p => p.ProductImageFiles).Select(p => new
