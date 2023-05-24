@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ETicaretAPI.Persistance.Repositories
 {
-    public class ReadRepository<T> : IReadRepository<T> where T : BaseEntity
+    public class ReadRepository<T> : Application.Repositories.ReadRepository<T> where T : BaseEntity
     {
         private readonly ETicaretAPIDbContext _context;
 

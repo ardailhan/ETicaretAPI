@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ETicaretAPI.Application.Repositories.BasketItemRepository
 {
-    public interface IBasketItemReadRepository : IReadRepository<BasketItem>
+    public interface IBasketItemReadRepository : ReadRepository<BasketItem>
     {
     }
 }

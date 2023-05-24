@@ -2,7 +2,7 @@
 
 namespace ETicaretAPI.Application.Repositories.BasketRepository
 {
-    public interface IBasketReadRepository : IReadRepository<Basket>
+    public interface IBasketReadRepository : ReadRepository<Basket>
     {
     }
 }

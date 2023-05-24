@@ -2,7 +2,7 @@
 
 namespace ETicaretAPI.Application.Repositories
 {
-    public interface IInvoiceFileReadRepository : ReadRepository<InvoiceFile>
+    public interface IEndpointReadRepository : ReadRepository<Endpoint>
     {
     }
 }

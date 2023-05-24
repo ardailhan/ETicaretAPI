@@ -2,7 +2,7 @@
 
 namespace ETicaretAPI.Application.Repositories
 {
-    public interface ICompletedOrderReadRepository : IReadRepository<CompletedOrder>
+    public interface ICompletedOrderReadRepository : ReadRepository<CompletedOrder>
     {
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ETicaretAPI.Application.Repositories
 {
-    public interface IProductImageFileReadRepository : IReadRepository<ProductImageFile>
+    public interface IProductImageFileReadRepository : ReadRepository<ProductImageFile>
     {
     }
 }
