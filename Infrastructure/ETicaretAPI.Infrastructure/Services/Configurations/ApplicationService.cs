@@ -56,6 +56,8 @@ namespace ETicaretAPI.Infrastructure.Services.Configurations
                             }
                         }
                 }
+
+
             return menus;
         }
     }
