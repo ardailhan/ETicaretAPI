@@ -1,4 +1,5 @@
-﻿using ETicaretAPI.Application.Consts;
+﻿using ETicaretAPI.Application.Abstractions.Services;
+using ETicaretAPI.Application.Consts;
 using ETicaretAPI.Application.CustomAttributes;
 using ETicaretAPI.Application.Enums;
 using ETicaretAPI.Application.Features.Commands.Product.CreateProduct;
@@ -22,10 +23,13 @@ namespace ETicaretAPI.API.Controllers
     public class ProductsController : ControllerBase
     {
         readonly IMediator _mediatr;
-
-        public ProductsController(IMediator mediatr)
+        readonly ILogger<ProductsController> _logger;
+        readonly IProductService _productService;
+        public ProductsController(IMediator mediatr, IProductService productService, ILogger<ProductsController> logger)
         {
             _mediatr = mediatr;
+            _productService = productService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -59,7 +63,7 @@ namespace ETicaretAPI.API.Controllers
         [HttpDelete("{Id}")]
         [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Deleting, Definition = "Delete Product")]
-        public async Task<IActionResult> Delete([FromRoute]RemoveProductCommandRequest removeProductCommandRequest)
+        public async Task<IActionResult> Delete([FromRoute] RemoveProductCommandRequest removeProductCommandRequest)
         {
             RemoveProductCommandResponse response = await _mediatr.Send(removeProductCommandRequest);
             return Ok();
@@ -84,7 +88,7 @@ namespace ETicaretAPI.API.Controllers
         [HttpDelete("[action]/{Id}")]
         [Authorize(AuthenticationSchemes = "Admin")]
         [AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Deleting, Definition = "Delete Product Image")]
-        public async Task<IActionResult> DeleteProductImage ([FromRoute]RemoveProductImageCommandRequest removeProductImageCommandRequest, [FromQuery] string imageId)
+        public async Task<IActionResult> DeleteProductImage([FromRoute] RemoveProductImageCommandRequest removeProductImageCommandRequest, [FromQuery] string imageId)
         {
             removeProductImageCommandRequest.ImageId = imageId;
             RemoveProductImageCommandResponse response = await _mediatr.Send(removeProductImageCommandRequest);
@@ -97,6 +101,12 @@ namespace ETicaretAPI.API.Controllers
         {
             ChangeShowcaseImageCommandResponse response = await _mediatr.Send(changeShowcaseImageCommandRequest);
             return Ok(response);
+        }
+        [HttpGet("qrcode/{productId}")]
+        public async Task<IActionResult> GetQrCodeToProduct([FromRoute] string productId)
+        {
+            var data = await _productService.QrCodeToProductAsync(productId);
+            return File(data, "image/png");
         }
     }
 }

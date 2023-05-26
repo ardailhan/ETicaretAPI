@@ -5,6 +5,7 @@ using ETicaretAPI.Application.Helpers;
 using ETicaretAPI.Application.Repositories;
 using ETicaretAPI.Domain.Entities;
 using ETicaretAPI.Domain.Entities.Identity;
+using ETicaretAPI.Persistance.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
@@ -114,44 +115,24 @@ namespace ETicaretAPI.Persistance.Services
         public async Task<bool> HasRolePermissionToEndpointAsync(string name, string code)
         {
             var userRoles = await GetRolesToUserAsync(name);
-
-            if (!userRoles.Any())
-                return false;
+            if (!userRoles.Any()) return false;
 
             Endpoint? endpoint = await _endpointReadRepository.Table
-                     .Include(e => e.Roles)
-                     .FirstOrDefaultAsync(e => e.Code == code);
+                 .Include(e => e.Roles)
+                 .FirstOrDefaultAsync(e => e.Code == code);
 
-            if (endpoint == null)
-                return false;
+            if (endpoint == null) return false;
 
             var hasRole = false;
             var endpointRoles = endpoint.Roles.Select(r => r.Name);
 
-            //foreach (var userRole in userRoles)
-            //{
-            //    if (!hasRole)
-            //    {
-            //        foreach (var endpointRole in endpointRoles)
-            //            if (userRole == endpointRole)
-            //            {
-            //                hasRole = true;
-            //                break;
-            //            }
-            //    }
-            //    else
-            //        break;
-            //}
-
-            //return hasRole;
 
             foreach (var userRole in userRoles)
             {
                 foreach (var endpointRole in endpointRoles)
-                    if (userRole == endpointRole)
+                    if(userRole == endpointRole)
                         return true;
             }
-
             return false;
         }
 
