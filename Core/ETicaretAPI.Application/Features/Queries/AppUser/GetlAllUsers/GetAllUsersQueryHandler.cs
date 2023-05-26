@@ -1,7 +1,7 @@
 ﻿using ETicaretAPI.Application.Abstractions.Services;
 using MediatR;
 
-namespace ETicaretAPI.Application.Features.Queries.AppUser
+namespace ETicaretAPI.Application.Features.Queries.AppUser.GetlAllUsers
 {
     public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQueryRequest, GetAllUsersQueryResponse>
     {

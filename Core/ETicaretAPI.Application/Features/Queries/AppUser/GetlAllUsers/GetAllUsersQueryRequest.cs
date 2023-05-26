@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace ETicaretAPI.Application.Features.Queries.AppUser
+namespace ETicaretAPI.Application.Features.Queries.AppUser.GetlAllUsers
 {
     public class GetAllUsersQueryRequest : IRequest<GetAllUsersQueryResponse>
     {
